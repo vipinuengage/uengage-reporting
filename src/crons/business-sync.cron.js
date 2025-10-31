@@ -1,6 +1,7 @@
 import moment from "moment";
 import { schedule } from "node-cron";
 import { prod_db_connection, report_db_connection } from "../db/mysql.js";
+import { CRON_EXPRESSIONS } from "../configs/env.js";
 
 const syncBusinessCron = () => {
   console.log("Sync Business cron enabled.");
@@ -10,7 +11,7 @@ const syncBusinessCron = () => {
   let isSyncBusinessReviewUpdateCronRunning = false;
 
   // Sync overall business - once a day
-  schedule("36 12 * * *", async () => {
+  schedule(CRON_EXPRESSIONS.syncBusinessCronExp, async () => {
     if (isSyncBusinessCronRunning) return console.log("Previous sync business cron still running. Skipping this cycle.");
     isSyncBusinessCronRunning = true;
 
@@ -33,7 +34,7 @@ const syncBusinessCron = () => {
         "latitude",
         "longitude",
         "contactNumber",
-	"menu_score",
+        "menu_score",
         "status",
         "is_opened",
         "onlineOrders",
@@ -98,7 +99,7 @@ const syncBusinessCron = () => {
   });
 
   // Sync business menu score - once a day
-  schedule("30 12 * * *", async () => {
+  schedule(CRON_EXPRESSIONS.syncBusinessMenuScoreCronExp, async () => {
     if (isSyncBusinessCronRunning) return console.log("Previous sync business menu score cron still running. Skipping this cycle.");
     isSyncBusinessCronRunning = true;
 
@@ -150,7 +151,7 @@ const syncBusinessCron = () => {
   });
 
   // Sync business orderType changes near real time - every 10 minutes
-  schedule("*/2 * * * *", async () => {
+  schedule(CRON_EXPRESSIONS.syncBusinessOrderTypeCronExp, async () => {
     if (isSyncBusinessUpdatesCronRunning) return console.log("Previous sync business update cron still running. Skipping this cycle.");
     isSyncBusinessUpdatesCronRunning = true;
 
@@ -208,7 +209,7 @@ const syncBusinessCron = () => {
   });
 
   // Sync business reviews
-  schedule("48 11 * * *", async () => {
+  schedule(CRON_EXPRESSIONS.syncBusinessReviewsCronExp, async () => {
     if (isSyncBusinessReviewUpdateCronRunning) return console.log("Previous sync business reviews cron still running. Skipping this cycle.");
     isSyncBusinessReviewUpdateCronRunning = true;
 

@@ -1,13 +1,14 @@
 import moment from "moment";
 import { schedule } from "node-cron";
 import { prod_db_connection, report_db_connection } from "../db/mysql.js";
+import { CRON_EXPRESSIONS } from "../configs/env.js";
 
 const syncOrdersCron = () => {
   console.log("Sync Orders cron enabled.");
 
   let isSyncOrdersCronRunning = false;
 
-  schedule("*/5 * * * *", async () => {
+  schedule(CRON_EXPRESSIONS.syncOrdersCronExp, async () => {
     if (isSyncOrdersCronRunning) return console.log("Previous sync orders cron still running. Skipping this cycle.");
     isSyncOrdersCronRunning = true;
 

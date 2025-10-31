@@ -17,4 +17,12 @@ const REPORT_DB_CONFIG = {
   database: process.env.REPORT_DB_NAME,
 };
 
-export { PORT, PROD_DB_CONFIG, REPORT_DB_CONFIG };
+const CRON_EXPRESSIONS = {
+  syncOrdersCronExp: process.env.SYNC_ORDERS_CRON_EXP,
+  syncBusinessCronExp: process.env.SYNC_BUSINESS_CRON_EXP,
+  syncBusinessMenuScoreCronExp: process.env.SYNC_BUSINESS_MENUSCORE_CRON_EXP,
+  syncBusinessOrderTypeCronExp: process.env.SYNC_BUSINESS_ORDERTYPE_CRON_EXP,
+  syncBusinessReviewsCronExp: process.env.SYNC_BUSINESS_REVIEWS_CRON_EXP,
+}
+
+export { PORT, PROD_DB_CONFIG, REPORT_DB_CONFIG, CRON_EXPRESSIONS };
