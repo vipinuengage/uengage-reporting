@@ -5,6 +5,7 @@ import { connectProdDB, connectReportDB } from "./db/mysql.js";
 import { syncBusinessCron } from "./crons/business-sync.cron.js";
 import { syncOrdersCron } from "./crons/orders-sync.cron.js";
 import { syncRiderLogsCron } from "./crons/rider-sync.cron.js";
+import { syncImageLogsCron } from "./crons/image-report-sync.cron.js";
 
 (async () => {
   try {
@@ -15,6 +16,7 @@ import { syncRiderLogsCron } from "./crons/rider-sync.cron.js";
     syncBusinessCron();
     syncOrdersCron();
     syncRiderLogsCron();
+    syncImageLogsCron()
 
     // app.listen(PORT, () => console.log(`Server is running on PORT:${PORT}`));
   } catch (error) {

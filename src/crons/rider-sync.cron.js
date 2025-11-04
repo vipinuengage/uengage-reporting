@@ -4,7 +4,7 @@ import { prod_db_connection, report_db_connection } from "../db/mysql.js";
 import { CRON_EXPRESSIONS } from "../configs/env.js";
 
 const syncRiderLogsCron = () => {
-    console.log("✅ Sync self pickup rider logs cron enabled.");
+    console.log("Sync self pickup rider logs cron enabled.");
 
     let isSyncSelfPickupRiderLogsCronRunning = false;
 
