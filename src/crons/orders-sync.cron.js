@@ -15,6 +15,8 @@ const syncOrdersCron = () => {
     console.log("Sync orders cron started");
     console.time("Sync orders cron completed in");
     try {
+      await ensureAllConnections();
+
       // Fetch unprocessed orders from production's metabase_order_table
       const [orders] = await prod_db_connection.execute("SELECT id, parentId, businessId, orderId, total, status, insertedAt FROM metabase_order_table WHERE status = 0 ORDER BY id ASC LIMIT 500");
 

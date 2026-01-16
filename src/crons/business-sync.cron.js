@@ -1,6 +1,6 @@
 import moment from "moment";
 import { schedule } from "node-cron";
-import { prod_db_connection, report_db_connection } from "../db/mysql.js";
+import { ensureAllConnections, prod_db_connection, report_db_connection } from "../db/mysql.js";
 import { CRON_EXPRESSIONS } from "../configs/env.js";
 
 const syncBusinessCron = () => {
@@ -18,6 +18,8 @@ const syncBusinessCron = () => {
     console.time("Sync business cron completed in");
     console.log("Sync business cron started");
     try {
+      await ensureAllConnections();
+
       const businessFields = [
         "id",
         "parentId",
@@ -106,6 +108,7 @@ const syncBusinessCron = () => {
     console.time("Sync business menu score cron completed in");
     console.log("Sync business menu score cron started");
     try {
+      await ensureAllConnections();
 
       // Get all businesses that match the criteria
       const [prodBusinesses] = await prod_db_connection.execute(`SELECT id, menu_score FROM addo_business WHERE status = 1 AND (parentId = 5 OR id = 5) AND id NOT IN (89, 8096, 8097)`);
@@ -158,6 +161,8 @@ const syncBusinessCron = () => {
     console.time("Sync business updates cron completed in");
     console.log("Sync business updates cron started");
     try {
+      await ensureAllConnections();
+
       // Get business changes
       const [mabus] = await prod_db_connection.execute("SELECT * from metabase_orderType_update WHERE status = 0 ORDER BY id ASC LIMIT 1000");
       if (mabus?.length) {
@@ -216,13 +221,13 @@ const syncBusinessCron = () => {
     console.time("Sync business reviews cron completed in");
     console.log("Sync business reviews cron started");
     try {
-
-      console.time("query")
+      await ensureAllConnections();
+      console.time("query");
       let [prod_abr] = await prod_db_connection.execute(`select abr.businessId as  businessId, abr.avg_rating from addo_business_reviews abr 
         left join addo_business ab ON ab.id = abr.businessId
         where ab.status = 1 AND ab.parentId = 5 AND ab.id NOT IN (89, 8096, 8097);
         `);
-      console.timeEnd("query")
+      console.timeEnd("query");
 
       // Process in batches of 20
       const batchSize = 20;
