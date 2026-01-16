@@ -1,6 +1,6 @@
 import moment from "moment";
 import { schedule } from "node-cron";
-import { prod_db_connection, report_db_connection } from "../db/mysql.js";
+import { ensureAllConnections, prod_db_connection, report_db_connection } from "../db/mysql.js";
 import { CRON_EXPRESSIONS } from "../configs/env.js";
 
 const syncOrdersCron = () => {
