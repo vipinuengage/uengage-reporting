@@ -8,6 +8,14 @@ const PROD_DB_CONFIG = {
   user: process.env.PROD_DB_USER,
   password: process.env.PROD_DB_PASS,
   database: process.env.PROD_DB_NAME,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+
+  // Optional but recommended
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 };
 
 const REPORT_DB_CONFIG = {
@@ -15,6 +23,14 @@ const REPORT_DB_CONFIG = {
   user: process.env.REPORT_DB_USER,
   password: process.env.REPORT_DB_PASS,
   database: process.env.REPORT_DB_NAME,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+
+  // Optional but recommended
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 };
 
 const CRON_EXPRESSIONS = {
@@ -25,6 +41,6 @@ const CRON_EXPRESSIONS = {
   syncBusinessReviewsCronExp: process.env.SYNC_BUSINESS_REVIEWS_CRON_EXP,
   syncRiderLogsCronExp: process.env.SYNC_RIDER_LOGS_CRON_EXP,
   syncImageLogCronExp: process.env.SYNC_IMAGE_LOGS_CRON_EXP,
-}
+};
 
 export { PORT, PROD_DB_CONFIG, REPORT_DB_CONFIG, CRON_EXPRESSIONS };
